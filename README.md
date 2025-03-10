@@ -51,13 +51,15 @@ python
 
 Example strategy based on order flow imbalance
 
-
+```python
 from backtesting.src.strategy.strategy_base import Strategy
+
 class SimpleStrategy(Strategy):
-def initialize(self):
-self.window = 20
-def on_bar(self, timestamp, bar_data, portfolio):
-for symbol in self.symbols:
-if symbol in bar_data:
-# Trading logic here
-pass
+    def initialize(self):
+        self.window = 20
+    def on_bar(self, timestamp, bar_data, portfolio):
+        for symbol in self.symbols:
+            if symbol in bar_data:
+            # Trading logic here
+            pass
+```
