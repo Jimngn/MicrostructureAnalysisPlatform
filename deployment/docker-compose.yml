@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: market_microstructure
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=market_microstructure
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+volumes:
+  postgres_data: 
